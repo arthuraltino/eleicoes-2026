@@ -16,7 +16,7 @@
 
 <span class="ph" style:width="{size}px" style:height="{size}px" style:--ring={SWATCH[c.cor ?? 'g']}>
   {#if c.foto && c.sq && !broken}
-    <img src="/data/fotos/{c.sq}.jpg" alt="" loading="lazy" onerror={() => (broken = true)} />
+    <img src="/data/fotos/{c.sq}.webp" alt="" loading="lazy" onerror={() => (broken = true)} />
   {:else}
     <span class="ini" style:font-size="{size * 0.38}px">{initials}</span>
   {/if}

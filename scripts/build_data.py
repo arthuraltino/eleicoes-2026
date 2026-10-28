@@ -11,7 +11,7 @@ Output (public/data):
   m/{mun}.json                  voting places, their results per election, zone areas
   u/{mun}/{zona}.json           every ballot box (BU metadata + votes per election)
   s/{UF}.json                   search index of voting places
-  fotos/{sq}.jpg                photos of majoritarian and elected candidates
+  fotos/{sq}.webp               photos of every candidate with votes, 112 px wide
 
 usage: .venv/Scripts/python -I scripts/build_data.py data public/data
 """
@@ -27,6 +27,7 @@ import unicodedata
 
 import duckdb
 import shapely
+from PIL import Image
 from shapely.geometry import MultiPoint, mapping, shape
 from shapely.ops import unary_union
 
@@ -544,20 +545,31 @@ def main():
         centers[k] = [round(pt.x, 5), round(pt.y, 5)]
         geoms[k // 100000][k] = f["geometry"]
 
-    # photos first, so the candidate lists can say which ones have a picture
-    os.makedirs(os.path.join(OUT, "fotos"), exist_ok=True)
-    n = 0
+    # photos first, so the candidate lists can say which ones have a picture.
+    # Every candidate with votes gets one, resized to what the site shows (≤ 52 px,
+    # 2x for dense screens) and stored as WebP.
+    fotos = os.path.join(OUT, "fotos")
+    shutil.rmtree(fotos, ignore_errors=True)
+    os.makedirs(fotos)
+    done, n = set(), 0
     for (e, race), r in races.items():
-        prop = r["parties"] is not None
         for c in r["c"]:
-            if "sq" not in c or (prop and not (c.get("sit") or "").startswith("Eleito")):
+            if "sq" not in c:
+                continue
+            if c["sq"] in done:
+                c["foto"] = 1
                 continue
             ue = "BR" if c["ue"] == "BR" else race
             src = os.path.join(DATA, "foto_cand", f"foto_cand2026_{ue}_div", f"F{ue}{c['sq']}_div.jpg")
-            if os.path.exists(src):
-                shutil.copyfile(src, os.path.join(OUT, "fotos", f"{c['sq']}.jpg"))
-                c["foto"] = 1
-                n += 1
+            if not os.path.exists(src):
+                continue
+            with Image.open(src) as im:
+                im = im.convert("RGB")
+                im.thumbnail((112, 160), Image.LANCZOS)
+                im.save(os.path.join(fotos, f"{c['sq']}.webp"), "WEBP", quality=72, method=6)
+            done.add(c["sq"])
+            c["foto"] = 1
+            n += 1
     print(f"{n} fotos", flush=True)
 
     for sub in ("r", "m", "u", "s"):

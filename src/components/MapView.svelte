@@ -77,7 +77,12 @@
     add({ id: 'muns-fill', type: 'fill', source: 'muns', paint: { 'fill-color': ['get', 'c'], 'fill-opacity': ['get', 'o'] } });
     add({
       id: 'muns-line', type: 'line', source: 'muns',
-      paint: { 'line-color': '#ffffff', 'line-opacity': 0.75, 'line-width': ['interpolate', ['linear'], ['zoom'], 4, 0.15, 8, 0.8, 12, 1.4] },
+      // zoomed out, thousands of borders would wash the fills out: keep them faint and hairline
+      paint: {
+        'line-color': '#ffffff',
+        'line-opacity': ['interpolate', ['linear'], ['zoom'], 3, 0.12, 6, 0.3, 9, 0.65],
+        'line-width': ['interpolate', ['linear'], ['zoom'], 3, 0.1, 6, 0.3, 9, 0.8, 12, 1.4],
+      },
     });
     add({
       id: 'ufs-line', type: 'line', source: 'ufs',

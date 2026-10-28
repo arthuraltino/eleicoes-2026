@@ -1,19 +1,22 @@
 import type { ColorKey } from './data';
 
-// Five steps per hue, same OKLCH lightness across hues (validated for CVD with the
-// dataviz validator: red/blue/ochre pass all-pairs; aqua needs labels, which the
-// panel list always provides). Lighter = narrower margin of victory.
+// Five steps per hue, same OKLCH lightness across hues (L .735 → .385), checked with
+// the dataviz validator: every ramp passes the ordinal checks (monotone, ΔL ≥ .06,
+// lightest step ≥ 2:1 on the map surface) and red/blue/ochre pass all-pairs CVD;
+// aqua needs labels, which the panel list always provides.
+// The light end stays clearly tinted so narrow wins don't read as washed out.
+// Lighter = narrower margin of victory.
 export const RAMPS: Record<ColorKey, string[]> = {
-  r: ['#f9c0ba', '#ea9a93', '#d9736d', '#b53a39', '#830112'],
-  b: ['#b7d3f6', '#86b6ef', '#5598e7', '#256abf', '#104281'],
-  o: ['#e6cca8', '#d1ab76', '#bc8b41', '#8f6004', '#5d3c00'],
-  a: ['#b4dbc7', '#88c1a4', '#5aa884', '#0d7e57', '#005136'],
-  g: ['#d0d0cd', '#b2b2b0', '#969693', '#6b6b69', '#444441'],
+  r: ['#f6827b', '#e0655f', '#c94643', '#ae1c25', '#830312'],
+  b: ['#71acf8', '#5392e3', '#3479cf', '#055cb6', '#004287'],
+  o: ['#d59e49', '#bf831a', '#a26d00', '#805501', '#5d3c00'],
+  a: ['#5fb88d', '#42a67b', '#0c8f62', '#00714c', '#015136'],
+  g: ['#aaaaa4', '#91918c', '#797974', '#5f5f5a', '#44443f'],
 };
 
 /** solid swatch for legends, bars and chips: the strong end of each ramp */
 export const SWATCH: Record<ColorKey, string> = {
-  r: '#b53a39', b: '#256abf', o: '#8f6004', a: '#0d7e57', g: '#6b6b69',
+  r: '#ae1c25', b: '#055cb6', o: '#805501', a: '#00714c', g: '#5f5f5a',
 };
 
 /** margin of victory (fraction of valid votes) -> ramp step */

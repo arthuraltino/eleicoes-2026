@@ -15,7 +15,7 @@
     const list: { cor?: string; p: string; nome?: string }[] = r?.p ? parties() : cands();
     const who = w ? list[w.idx] : null;
     const bg = w ? fill((who?.cor ?? 'g') as never, w.margin) : EMPTY;
-    return { bg, dark: !!w && step(w.margin) >= 3, share: w?.share ?? null, who: who ? (who.nome ?? who.p) : 'sem votos' };
+    return { bg, dark: !!w && step(w.margin) >= 2, share: w?.share ?? null, who: who ? (who.nome ?? who.p) : 'sem votos' };
   }
 </script>
 

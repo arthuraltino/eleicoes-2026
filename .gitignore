@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Eleições 2026: dados brutos do TSE e arquivos gerados (data/ cobre também public/data/)
+data/
+node_modules/
+dist/
+.netlify/
+.venv/
+# the Python template above ignores lib/; the site's code lives in src/lib
+!src/lib/

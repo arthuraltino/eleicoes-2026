@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# every view has its own URL; serve the app for any path that is not a real file
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# election results do not change: cache data and photos for a day, assets forever
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

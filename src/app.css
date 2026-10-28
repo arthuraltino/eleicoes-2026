@@ -1,0 +1,92 @@
+:root {
+  /* papel térmico do BU, tinta, grafite da urna, teclas Confirma/Corrige */
+  --paper: #f2f4f1;
+  --sheet: #fbfcfa;
+  --ink: #14212e;
+  --ink-2: #4a5561;
+  --muted: #6f7881;
+  --rule: #dde2dc;
+  --rule-strong: #c6ccc5;
+  --grafite: #2b2f33;
+  --grafite-2: #3a3f44;
+  --confirma: #2e8b57;
+  --corrige: #e07a2e;
+  --focus: #1f6feb;
+
+  --sans: 'Sofia Sans', system-ui, sans-serif;
+  --cond: 'Sofia Sans Extra Condensed', 'Sofia Sans', system-ui, sans-serif;
+  --mono: 'Martian Mono', ui-monospace, monospace;
+
+  /* type scale (1.25) */
+  --t-xs: 12px;
+  --t-sm: 13.5px;
+  --t-md: 15px;
+  --t-lg: 18.75px;
+  --t-xl: 23.4px;
+  --t-2xl: 29.3px;
+  --t-hero: 64px;
+
+  --panel-w: min(460px, 40vw);
+  --bar-h: 56px;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--t-md);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#app {
+  height: 100%;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
